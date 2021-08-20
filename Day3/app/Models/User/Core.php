@@ -12,9 +12,8 @@ class Core
     protected $repo;
 
     protected $rules = [
-        'user_id' => 'required|integer',
-        'title' => 'required|string',
-        'body' => 'required|string'
+        'email' => 'required|email',
+        'name' => 'required|string'
     ];
 
     public function __construct(Repository $repo)

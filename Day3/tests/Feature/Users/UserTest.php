@@ -13,7 +13,7 @@ class UserTest extends TestCase
      * @return void
      */
     use RefreshDatabase;
-    public function test_createUser()
+    public function testCreateUser()
     {
         $response = $this->postJson('/api/users', ["name" => "Jack",
             "email" => "acle@a",
@@ -28,7 +28,7 @@ class UserTest extends TestCase
             ]);
     }
 
-    public function test_getAllUsers()
+    public function testGetAllUsers()
     {
         $response = $this->postJson('/api/users', ["name" => "Jack",
             "email" => "acle@a",
@@ -46,7 +46,7 @@ class UserTest extends TestCase
             ]);
     }
 
-    public function test_getUserById()
+    public function testGetUserById()
     {
         $response = $this->postJson('/api/users', ["name" => "Jack",
             "email" => "acle@a",
