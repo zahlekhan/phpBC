@@ -54,7 +54,7 @@ class Entity extends Model
         return $this->belongsTo(User\Entity::class,"user_id","id");
     }
 
-    public function posts()
+    public function comments()
     {
         return $this->hasMany(Comment\Entity::class,"post_id");
     }
