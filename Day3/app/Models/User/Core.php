@@ -3,49 +3,66 @@
 namespace App\Models\User;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User;
+use Illuminate\Validation\ValidationException;
 
 class Core
 {
     protected $repo;
+
+    protected $rules = [
+        'user_id' => 'required|integer',
+        'title' => 'required|string',
+        'body' => 'required|string'
+    ];
 
     public function __construct(Repository $repo)
     {
         $this->repo = $repo;
     }
 
+    /**
+     *
+     * @param array $attributes
+     * @return Entity
+     * @throws ValidationException
+     */
     public function create(array $attributes)
     {
-        $user = $this->repo->create($attributes);
-        return $user;
+        $validation = \Validator::make($attributes,$this->rules);
+        if ($validation->failed())
+        {
+            throw new ValidationException($validation);
+        }
+        return $this->repo->create($attributes);
     }
 
     public function all()
     {
-        $users = $this->repo->all();
-        return $users;
+        return $this->repo->all();
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return Entity
+     * @param int $id
+     * @return Model
      */
     public function find(int $id)
     {
-        $user = $this->repo->find($id);
-        return $user;
+        return $this->repo->find($id);
     }
 
     /**
      * Display a listing of the resource.
      *
+     * @param int $id
      * @return Collection
      */
     public function allPosts(int $id)
     {
         $user = $this->find($id);
-        $userPosts = $user->posts;
-        return $userPosts;
+        return $user->posts;
     }
 }

@@ -38,7 +38,6 @@ class UserTest extends TestCase
             ->assertJson([
                 "users" =>
                     [[
-                        "id" => 2,
                         "name" => "Jack",
                         "email" => "acle@a",
                         "email_verified_at" => null,
@@ -49,14 +48,16 @@ class UserTest extends TestCase
 
     public function test_getUserById()
     {
+        $response = $this->postJson('/api/users', ["name" => "Jack",
+            "email" => "acle@a",
+            "password" => "test"]);
         $response = $this->getJson('/api/users/3');
         $response
             ->assertJson([
                 "user" =>
                     [
-                        "id" => 3,
                         "name" => "Jack",
-                        "email" => "a@a",
+                        "email" => "acle@a",
                         "email_verified_at" => null,
                     ],
                 'message' => 'Retrieved successfully',
