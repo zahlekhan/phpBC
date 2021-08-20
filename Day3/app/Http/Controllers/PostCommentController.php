@@ -55,6 +55,7 @@ class PostCommentController extends Controller
      */
     public function show(int $postID,int $id)
     {
+
         $comment = $this->core->findByPost($postID,$id);
         return response(['comment' => new CommentResource($comment), 'message' => 'Retrieved successfully'], 200);
     }

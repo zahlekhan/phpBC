@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models\Comment;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Core
 {
@@ -40,7 +41,7 @@ class Core
         $comment = $this->find($id);
         if ($comment->getAttribute("post_id") != $postID)
         {
-            return NULL;
+            throw new ModelNotFoundException('Comment not found by ID ');
         }
         return $comment;
     }
