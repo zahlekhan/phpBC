@@ -2,6 +2,8 @@
 
 namespace App\Models\Post;
 
+use Illuminate\Database\Eloquent\Collection;
+
 class Core
 {
     protected $repo;

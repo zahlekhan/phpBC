@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Models\Post;
+namespace App\Models\Comment;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
-use App\Models\Comment;
+use App\Models\Post;
 use Illuminate\Support\Carbon;
 
 /**
@@ -28,15 +29,14 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Entity whereTitle($value)
  * @method static Builder|Entity whereUpdatedAt($value)
  * @method static Builder|Entity whereUserId($value)
- * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Comment\Entity[] $posts
- * @property-read int|null $posts_count
+ * @mixin Eloquent
+ * @property-read \App\Models\Post\Entity $post
  */
 class Entity extends Model
 {
     use HasFactory;
 
-    protected $table = 'posts';
+    protected $table = 'comments';
 
     /**
      * The attributes that are mass assignable.
@@ -44,8 +44,8 @@ class Entity extends Model
      * @var array
      */
     protected $fillable = [
-        'title',
-        'body',
+        'post_id',
+        'content',
         'user_id'
     ];
 
@@ -54,8 +54,8 @@ class Entity extends Model
         return $this->belongsTo(User\Entity::class,"user_id","id");
     }
 
-    public function posts()
+    public function post()
     {
-        return $this->hasMany(Comment\Entity::class,"post_id");
+        return $this->belongsTo(Post\Entity::class,"post_id","id");
     }
 }
