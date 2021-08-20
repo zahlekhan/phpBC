@@ -1,0 +1,52 @@
+<?php
+
+namespace App\Models\Post;
+
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+
+/**
+ * App\Models\Post\Entity
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property string $title
+ * @property string $body
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\User\Entity $user
+ * @method static Builder|Entity newModelQuery()
+ * @method static Builder|Entity newQuery()
+ * @method static Builder|Entity query()
+ * @method static Builder|Entity whereBody($value)
+ * @method static Builder|Entity whereCreatedAt($value)
+ * @method static Builder|Entity whereId($value)
+ * @method static Builder|Entity whereTitle($value)
+ * @method static Builder|Entity whereUpdatedAt($value)
+ * @method static Builder|Entity whereUserId($value)
+ * @mixin \Eloquent
+ */
+class Entity extends Model
+{
+    use HasFactory;
+
+    protected $table = 'posts';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'title',
+        'body',
+        'user_id'
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User\Entity::class,"user_id","id");
+    }
+}

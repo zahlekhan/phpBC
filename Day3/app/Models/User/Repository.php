@@ -2,6 +2,9 @@
 
 namespace App\Models\User;
 
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+
 class Repository
 {
     protected $user;
@@ -25,9 +28,16 @@ class Repository
         return $users;
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @param int $id
+     * @return Model
+     */
     public function find(int $id)
     {
         $user = $this->user->newQuery()->findOrFail($id);
         return $user;
     }
+
 }

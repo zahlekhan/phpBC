@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User\Core;
+use App\Models\Post\Core;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Resources\UserResource;
 use App\Http\Resources\PostResource;
 
-class UserController extends Controller
+class PostController extends Controller
 {
     protected $core;
 
@@ -23,8 +22,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = $this->core->all();
-        return response([ 'users' => UserResource::collection($users), 'message' => 'Retrieved successfully'], 200);
+        $posts = $this->core->all();
+        return response([ 'users' => PostResource::collection($posts), 'message' => 'Retrieved successfully'], 200);
     }
 
     /**
@@ -46,33 +45,20 @@ class UserController extends Controller
 //            return response(['error' => $validator->errors(), 'Validation Error']);
 //        }
 
-        $user = $this->core->create($data);
+        $post = $this->core->create($data);
 
-        return response(['user' => new UserResource($user), 'message' => 'Created successfully'], 201);
+        return response(['user' => new PostResource($post), 'message' => 'Created successfully'], 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User\Entity  $user
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show(int $id)
     {
-        $user = $this->core->find($id);
-        return response(['user' => new UserResource($user), 'message' => 'Retrieved successfully'], 200);
+        $post = $this->core->find($id);
+        return response(['user' => new PostResource($post), 'message' => 'Retrieved successfully'], 200);
     }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showPosts(int $id)
-    {
-        $posts = $this->core->allPosts($id);
-        //dd($posts);
-        return response(['posts' => PostResource::collection($posts), 'message' => 'Retrieved successfully'], 200);
-    }
-
 }
